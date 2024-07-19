@@ -1,0 +1,30 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    container_name: english_diary_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - 'english_diary_postgres_data:/var/lib/postgresql/data'
+  web:
+    container_name: english_diary_web
+    build:
+      context: ./rails
+    command: bash -c "rm -f /myapp/tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
+    volumes:
+      - ./rails:/myapp
+    ports:
+      - 3000:3000
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: postgres
+    depends_on:
+      - db
+    tty: true
+    stdin_open: true
+volumes:
+  english_diary_postgres_data:
