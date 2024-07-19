@@ -45,7 +45,7 @@ module Myapp
                        request_specs: false
     end
 
-    config.time_zone = "Tokyo"
+    config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
   end
 end

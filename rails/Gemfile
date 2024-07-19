@@ -61,6 +61,12 @@ group :development, :test do
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'pry-byebug'
+  gem 'pry-doc'
+  gem 'pry-rails'
 end
 
 group :development do
