@@ -1,0 +1,1 @@
+# english_diary_rails_app
