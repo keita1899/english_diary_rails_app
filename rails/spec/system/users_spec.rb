@@ -28,6 +28,8 @@ RSpec.describe 'Users', type: :system do
       expect {
         visit signup_path
 
+        puts page.body
+
         fill_in '名前', with: valid_attributes[:name]
         fill_in 'メールアドレス', with: valid_attributes[:email]
         fill_in 'パスワード', with: valid_attributes[:password]
@@ -43,6 +45,8 @@ RSpec.describe 'Users', type: :system do
 
     it '間違った値を入力すると失敗する' do
       visit signup_path
+
+      puts page.body
 
       fill_in '名前', with: invalid_attributes[:name]
       fill_in 'メールアドレス', with: invalid_attributes[:email]
