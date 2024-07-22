@@ -88,7 +88,7 @@ RSpec.describe User, type: :model do
       user.password = 'a' * 7
       user.password_confirmation = user.password
       expect(user).to be_invalid
-      expect(user.errors[:password]).to include('は半角英数字で、英字と数字の両方を含む必要があります')
+      expect(user.errors[:password]).to include('は8文字以上で入力してください')
     end
 
     it 'パスワードが8文字であれば成功する' do
@@ -143,7 +143,7 @@ RSpec.describe User, type: :model do
           password_confirmation: password,
         )
         expect(user).to be_invalid
-        expect(user.errors[:password]).to include('は半角英数字で、英字と数字の両方を含む必要があります')
+        expect(user.errors[:password]).to include('は半角英数字で、少なくとも1つの英字と1つの数字を含む必要があります')
       end
     end
 
