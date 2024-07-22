@@ -5,11 +5,11 @@ on:
   push:
 
 jobs:
-  env:
-    LANG: ja_JP.UTF-8
-    LC_ALL: ja_JP.UTF-8
   rspec:
     runs-on: ubuntu-latest
+    env:
+      LANG: ja_JP.UTF-8
+      LC_ALL: ja_JP.UTF-8
     defaults:
       run:
         working-directory: rails
