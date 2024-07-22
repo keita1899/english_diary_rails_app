@@ -42,6 +42,17 @@ jobs:
           cp config/database.yml.ci config/database.yml
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build assets
+        run: yarn build
       
       - name: Run rspec
         run: bundle exec rspec
