@@ -50,6 +50,9 @@ jobs:
 
       - name: Build assets
         run: yarn build
+
+      - name: Ensure build directory exists
+        run: mkdir -p app/assets/builds
       
       - name: Run rspec
         run: bundle exec rspec
