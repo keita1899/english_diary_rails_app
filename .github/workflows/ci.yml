@@ -39,6 +39,17 @@ jobs:
           cp config/database.yml.ci config/database.yml
           bundle exec rails db:create RAILS_ENV=test
           bundle exec rails db:migrate RAILS_ENV=test
+
+      - name: Install Node.js and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Yarn dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build assets
+        run: yarn build
       
       - name: Precompile assets
         run: |
