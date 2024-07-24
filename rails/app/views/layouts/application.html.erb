@@ -7,10 +7,12 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
   <body class="min-h-screen flex flex-col">
     <%= render 'layouts/header' %>
+    <%= render 'shared/flash_message' %>
     <main class="container mx-auto mt-8 px-4 flex-grow">
       <%= yield %>
     </main>

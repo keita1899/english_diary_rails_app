@@ -1,0 +1,14 @@
+<% if object.errors.any? %>
+  <div class="alert alert-error shadow-lg">
+    <div>
+      <div>
+        <h3 class="font-bold">以下の<%= pluralize(object.errors.count, "つのエラー") %>が発生しました:</h3>
+        <ul class="list-none">
+          <% object.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>
