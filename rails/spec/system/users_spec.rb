@@ -5,6 +5,15 @@ RSpec.describe 'Users', type: :system do
     driven_by(:rack_test)
   end
 
+  def fill_in_signup_form(user_params)
+    fill_in '名前', with: user_params[:name]
+    fill_in 'メールアドレス', with: user_params[:email]
+    fill_in 'パスワード', with: user_params[:password]
+    fill_in 'パスワード（確認用）', with: user_params[:password_confirmation]
+
+    click_button '登録'
+  end
+
   describe '新規登録' do
     let(:valid_attributes) do
       {
@@ -28,38 +37,37 @@ RSpec.describe 'Users', type: :system do
       expect {
         visit signup_path
 
-        puts page.body
-
-        fill_in '名前', with: valid_attributes[:name]
-        fill_in 'メールアドレス', with: valid_attributes[:email]
-        fill_in 'パスワード', with: valid_attributes[:password]
-        fill_in 'パスワード（確認用）', with: valid_attributes[:password_confirmation]
-
-        click_button '登録'
+        fill_in_signup_form(valid_attributes)
       }.to change { User.count }.by(1)
 
-      expect(current_path).to eq(root_path)
-
+      expect(current_path).to eq(diaries_path)
       expect(page).to have_content '新規登録が完了しました'
     end
 
     it '間違った値を入力すると失敗する' do
       visit signup_path
 
-      puts page.body
-
-      fill_in '名前', with: invalid_attributes[:name]
-      fill_in 'メールアドレス', with: invalid_attributes[:email]
-      fill_in 'パスワード', with: invalid_attributes[:password]
-      fill_in 'パスワード（確認用）', with: invalid_attributes[:password_confirmation]
-
-      click_button '登録'
+      fill_in_signup_form(invalid_attributes)
 
       expect(User.count).to eq(0)
-
       expect(current_path).to eq(users_path)
       expect(page).to have_content '名前を入力してください'
       expect(page).to have_content '新規登録に失敗しました'
+    end
+
+    context 'ログインしている場合' do
+      let!(:user) { create(:user) }
+
+      before do
+        sign_in_as user
+      end
+
+      it '新規登録ページにアクセスするとカレンダーページにリダイレクトする' do
+        visit signup_path
+
+        expect(page).to have_title 'カレンダー | English Diary'
+        expect(page).to have_content 'すでにログインしています'
+      end
     end
   end
 end
