@@ -6,8 +6,4 @@ module LoginSupport
     fill_in 'パスワード', with: user.password
     click_button 'ログイン'
   end
-
-  def is_logged_in?
-    !session[:user_id].nil?
-  end
 end

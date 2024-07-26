@@ -10,7 +10,7 @@
             <summary><%= current_user.name %></summary>
             <ul class="bg-base-100 rounded-t-none p-2">
               <li><%= link_to "プロフィール" %></li>
-              <li><%= link_to "ログアウト" %></li>
+              <li><%= link_to "ログアウト", logout_path, data: { turbo_method: "delete" }  %></li>
             </ul>
           </details>
         </li>

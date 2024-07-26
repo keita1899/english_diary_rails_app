@@ -64,4 +64,23 @@ RSpec.describe 'Sessions', type: :system do
       end
     end
   end
+
+  describe 'ログアウト' do
+    let!(:user) { create(:user, email: 'test@example.com', password: 'password123') }
+
+    before do
+      sign_in_as user
+    end
+
+    it 'ログアウトボタンをクリックするとログアウトされる' do
+      find('.menu').click
+      expect(page).to have_link 'ログアウト'
+
+      click_link 'ログアウト'
+
+      expect(page).not_to have_content user.name
+      expect(page).to have_content 'ログアウトしました'
+      expect(current_path).to eq(new_session_path)
+    end
+  end
 end
