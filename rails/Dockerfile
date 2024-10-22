@@ -2,6 +2,8 @@ FROM ruby:3.1.2
 RUN apt-get update -qq && apt-get install -y build-essential \
     nodejs \
     libpq-dev \
+    imagemagick \
+    libvips42 \
     vim
 
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
