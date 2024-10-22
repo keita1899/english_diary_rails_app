@@ -122,6 +122,12 @@ RSpec.describe User, type: :model do
       expect(user).to be_invalid
     end
 
+    it 'メールアドレスが大文字でも成功する' do
+      create(:user, email: 'test@example.com')
+      duplicate_user = build(:user, email: 'TEST@EXAMPLE.COM')
+      expect(duplicate_user).to be_valid
+    end
+
     it 'メールアドレスの形式が間違っているとき' do
       invalid_emails.each do |email|
         user = User.new(
@@ -151,6 +157,60 @@ RSpec.describe User, type: :model do
       user.password_confirmation = 'different_password123'
       expect(user).to be_invalid
       expect(user.errors[:password_confirmation]).to include('とパスワードの入力が一致しません')
+    end
+  end
+
+  describe 'アバター画像バリデーション' do
+    it 'アバター画像が空だと失敗する' do
+      expect(subject).to validate_attached_of(:avatar).on(:update)
+    end
+
+    it 'アバター画像のファイル形式がpngかjpegだと成功する' do
+      expect(subject).to validate_content_type_of(:avatar).allowing('image/png', 'image/jpeg').on(:update)
+    end
+
+    it 'アバター画像のファイル形式がgifだと失敗する' do
+      expect(subject).to validate_content_type_of(:avatar).rejecting('image/gif').on(:update)
+    end
+
+    it 'アバター画像のファイル形式が画像ファイル以外だと失敗する' do
+      expect(subject).to validate_content_type_of(:avatar).rejecting(
+        'text/plain', 'text/xml', 'application/msword', 'application/pdf',
+        'application/vnd.ms-excel', 'application/zip', 'audio/mpeg',
+        'video/mp4', 'text/html', 'application/xml'
+      ).on(:update)
+    end
+
+    it 'アバター画像のファイルサイズが1MB未満だと成功する' do
+      expect(subject).to validate_size_of(:avatar).less_than(1.megabytes).on(:update)
+    end
+
+    it 'アバター画像のファイルサイズが1MB以上だと失敗する' do
+      expect(subject).not_to validate_size_of(:avatar).greater_than_or_equal_to(1.megabytes).on(:update)
+    end
+
+    it 'アバター画像のwidthが32から1024ピクセルの間だと成功する' do
+      expect(subject).to validate_dimensions_of(:avatar).width_between(32..1024).on(:update)
+    end
+
+    it 'アバター画像のwidthが31ピクセルだと失敗する' do
+      expect(subject).not_to validate_dimensions_of(:avatar).width(31).on(:update)
+    end
+
+    it 'アバター画像のwidthが1025ピクセルだと失敗する' do
+      expect(subject).not_to validate_dimensions_of(:avatar).width(1025).on(:update)
+    end
+
+    it 'アバター画像のheightが32から1024ピクセルの間だと成功する' do
+      expect(subject).to validate_dimensions_of(:avatar).height_between(32..1024).on(:update)
+    end
+
+    it 'アバター画像のheightが31ピクセルだと失敗する' do
+      expect(subject).not_to validate_dimensions_of(:avatar).height(31).on(:update)
+    end
+
+    it 'アバター画像のheightが1025ピクセルだと失敗する' do
+      expect(subject).not_to validate_dimensions_of(:avatar).height(1025).on(:update)
     end
   end
 end
