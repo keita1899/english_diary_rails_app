@@ -117,6 +117,7 @@ ja:
       too_long: は%{count}文字以内で入力してください
       too_short: は%{count}文字以上で入力してください
       wrong_length: は%{count}文字で入力してください
+      content_type_invalid: "の形式が不正です"
       file_size_not_less_than: "ファイルサイズは %{max_size} 未満でなければなりません (現在のサイズは %{file_size} です)"
       file_size_not_less_than_or_equal_to: "ファイルサイズは %{max_size} 以下でなければなりません (現在のサイズは %{file_size} です)"
       file_size_not_greater_than: "ファイルサイズは %{min_size} より大きくなければなりません (現在のサイズは %{file_size} です)"
