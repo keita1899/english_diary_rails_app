@@ -70,4 +70,61 @@ RSpec.describe 'Users', type: :system do
       end
     end
   end
+
+  describe 'プロフィール' do
+    let!(:user) { create(:user, email: 'test@example.com', password: 'password123') }
+
+    context 'ログインしていない場合' do
+      it 'プロフィールページにアクセスするとログインページにリダイレクトされる' do
+        visit profile_path
+
+        expect(current_path).to eq(new_session_path)
+        expect(page).to have_content 'ログインが必要です'
+      end
+    end
+
+    context 'ログインしている場合' do
+      before do
+        sign_in_as user
+      end
+
+      it 'プロフィールページにアクセスが成功する' do
+        visit profile_path
+
+        expect(page).to have_title 'プロフィール | English Diary'
+      end
+
+      it '名前と画像ファイルを入力するとプロフィールの更新が成功する' do
+        visit profile_path
+        expect(page).to have_selector("img[src*='default_avatar']")
+
+        fill_in '名前', with: 'test'
+        attach_file 'user[avatar]', "#{Rails.root}/spec/files/default_avatar.png"
+        click_button '更新'
+
+        user.reload
+
+        expect(page).to have_content 'プロフィールを更新しました'
+        expect(page).to have_content user.name
+        expect(page).to have_selector("img[src*='default_avatar']")
+      end
+
+      it '名前が空だとプロフィールの更新が失敗する' do
+        visit profile_path
+        expect(page).to have_selector("img[src*='default_avatar']")
+
+        fill_in '名前', with: nil
+        attach_file 'user[avatar]', "#{Rails.root}/spec/files/avatar.png"
+
+        click_button '更新'
+
+        user.reload
+
+        expect(page).to have_content 'プロフィールの更新に失敗しました'
+        expect(page).to have_content '名前を入力してください'
+        expect(page).to have_content user.name
+        expect(page).to have_selector("img[src*='avatar']")
+      end
+    end
+  end
 end
