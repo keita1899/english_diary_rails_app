@@ -1,15 +1,22 @@
 <div class="navbar bg-base-100">
   <div class="flex-1">
-    <a class="btn btn-ghost text-xl">English Diary</a>
+    <%= link_to 'English Diary', diaries_path, class: 'btn btn-ghost text-xl' %>
   </div>
   <div class="flex-none">
-    <ul class="menu menu-horizontal px-1">
+    <ul class="menu menu-horizontal px-1 ">
       <% if logged_in? %>
         <li>
           <details>
-            <summary><%= current_user.name %></summary>
+            <summary>
+              <div class="avatar mx-auto">
+                <div class="w-8 rounded-full">
+                  <%= image_tag current_user.avatar_url, alt: "Preview", class: "w-full h-full object-cover rounded-full" %>
+                </div>
+              </div>
+              <%= current_user.name %>
+            </summary>
             <ul class="bg-base-100 rounded-t-none p-2">
-              <li><%= link_to "プロフィール" %></li>
+              <li><%= link_to "プロフィール", profile_path %></li>
               <li><%= link_to "ログアウト", logout_path, data: { turbo_method: "delete" }  %></li>
             </ul>
           </details>

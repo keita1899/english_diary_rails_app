@@ -6,6 +6,7 @@ require_relative '../config/environment'
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
+require 'active_storage_validations/matchers'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -64,4 +65,12 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   config.include LoginSupport
+
+  config.after(:suite) do
+    Pathname(ActiveStorage::Blob.service.root).each_child do |path| 
+      path.rmtree if path.directory?
+    end
+  end
+
+  config.include ActiveStorageValidations::Matchers
 end
