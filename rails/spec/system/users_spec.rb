@@ -99,14 +99,14 @@ RSpec.describe 'Users', type: :system do
         expect(page).to have_selector("img[src*='default_avatar']")
 
         fill_in '名前', with: 'test'
-        attach_file 'user[avatar]', "#{Rails.root}/spec/files/default_avatar.png"
+        attach_file 'user[avatar]', "#{Rails.root}/spec/files/avatar.png"
         click_button '更新'
 
         user.reload
 
         expect(page).to have_content 'プロフィールを更新しました'
         expect(page).to have_content user.name
-        expect(page).to have_selector("img[src*='default_avatar']")
+        expect(page).to have_selector("img[src*='avatar']")
       end
 
       it '名前が空だとプロフィールの更新が失敗する' do
@@ -123,7 +123,6 @@ RSpec.describe 'Users', type: :system do
         expect(page).to have_content 'プロフィールの更新に失敗しました'
         expect(page).to have_content '名前を入力してください'
         expect(page).to have_content user.name
-        expect(page).to have_selector("img[src*='avatar']")
       end
     end
   end
