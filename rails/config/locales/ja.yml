@@ -7,6 +7,7 @@ ja:
         email: "メールアドレス"
         password: "パスワード"
         password_confirmation: "パスワード（確認用）"
+        avatar: "アバター画像"
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'
@@ -116,6 +117,29 @@ ja:
       too_long: は%{count}文字以内で入力してください
       too_short: は%{count}文字以上で入力してください
       wrong_length: は%{count}文字で入力してください
+      file_size_not_less_than: "ファイルサイズは %{max_size} 未満でなければなりません (現在のサイズは %{file_size} です)"
+      file_size_not_less_than_or_equal_to: "ファイルサイズは %{max_size} 以下でなければなりません (現在のサイズは %{file_size} です)"
+      file_size_not_greater_than: "ファイルサイズは %{min_size} より大きくなければなりません (現在のサイズは %{file_size} です)"
+      file_size_not_greater_than_or_equal_to: "ファイルサイズは %{min_size} 以上でなければなりません (現在のサイズは %{file_size} です)"
+      file_size_not_between: "ファイルサイズは %{min_size} から %{max_size} の間でなければなりません (現在のサイズは %{file_size} です)"
+      limit_out_of_range: "総数が範囲外です"
+      image_metadata_missing: "有効な画像ではありません"
+      dimension_min_inclusion: "幅と高さはそれぞれ %{width} x %{height} ピクセル以上でなければなりません"
+      dimension_max_inclusion: "幅と高さはそれぞれ %{width} x %{height} ピクセル以下でなければなりません"
+      dimension_width_inclusion: "幅は %{min} から %{max} ピクセルの範囲内でなければなりません"
+      dimension_height_inclusion: "高さは %{min} から %{max} ピクセルの範囲内でなければなりません"
+      dimension_width_greater_than_or_equal_to: "幅は %{length} ピクセル以上でなければなりません"
+      dimension_height_greater_than_or_equal_to: "高さは %{length} ピクセル以上でなければなりません"
+      dimension_width_less_than_or_equal_to: "幅は %{length} ピクセル以下でなければなりません"
+      dimension_height_less_than_or_equal_to: "高さは %{length} ピクセル以下でなければなりません"
+      dimension_width_equal_to: "幅は %{length} ピクセルでなければなりません"
+      dimension_height_equal_to: "高さは %{length} ピクセルでなければなりません"
+      aspect_ratio_not_square: "正方形の画像でなければなりません"
+      aspect_ratio_not_portrait: "縦長の画像でなければなりません"
+      aspect_ratio_not_landscape: "横長の画像でなければなりません"
+      aspect_ratio_is_not: "アスペクト比が %{aspect_ratio} でなければなりません"
+      aspect_ratio_unknown: "不明なアスペクト比です"
+      image_not_processable: "有効な画像ではありません"
     template:
       body: 次の項目を確認してください
       header: "%{model}に%{count}個のエラーが発生しました"
